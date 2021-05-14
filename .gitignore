@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/KennardHireGomokuApi/.vs/KennardHireGomokuApi
+/KennardHireGomokuApi/KennardHireGomokuApi/bin
+/KennardHireGomokuApi/KennardHireGomokuApi/.config
+/KennardHireGomokuApi/KennardHireGomokuApi/obj
+/KennardHireGomokuApi/KennardHireGomokuApiTests/bin/Debug/net5.0
+/KennardHireGomokuApi/KennardHireGomokuApiTests/obj
+/KennardHireGomokuApi/KennardHireGomokuClient/bin/Debug/net5.0
+/KennardHireGomokuApi/KennardHireGomokuClient/obj
+/KennardHireGomokuApi/KennardHireGomokuConsoleApp/bin/Debug/net5.0
+/KennardHireGomokuApi/KennardHireGomokuConsoleApp/obj
