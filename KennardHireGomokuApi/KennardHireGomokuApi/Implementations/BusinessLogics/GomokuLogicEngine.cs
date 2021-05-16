@@ -30,6 +30,9 @@ namespace KennardHireGomokuApi.Implementations.BusinessLogics
 
 		public EngineResultType? AddStoneToBoard(GameModel matchedGame, StoneModel newStone)
 		{
+			if (matchedGame.IsComplete)
+				return matchedGame.WhoWon;
+
 			//NOTE: Check for occupied stones
 			if (!_generalRuleValidators[ValidatorType.Range].Validate(newStone))
 				return EngineResultType.StoneRejected;
@@ -73,6 +76,8 @@ namespace KennardHireGomokuApi.Implementations.BusinessLogics
 					var result = ruleChecker.Check(matchedNeighbourStoneLocations, newStone, matchedList);
 					if (result != null)
 					{
+						matchedGame.IsComplete = true;
+						matchedGame.WhoWon = result.Value;
 						matchedList.Add(newStone);
 						return result;
 					}

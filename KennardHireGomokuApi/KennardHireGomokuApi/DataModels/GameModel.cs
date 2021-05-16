@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using KennardHireGomokuApi.Enums;
+
 namespace KennardHireGomokuApi.DataModels
 {
 	public class GameModel
@@ -15,6 +17,9 @@ namespace KennardHireGomokuApi.DataModels
 
 		public Guid CurrentPlayer { get; set; }
 		public int TurnCount { get; set; }
+
+		public bool IsComplete { get; set; }
+		public EngineResultType WhoWon { get; set; }
 		public GameModel()
 		{
 			BlackStones = new List<StoneModel>();

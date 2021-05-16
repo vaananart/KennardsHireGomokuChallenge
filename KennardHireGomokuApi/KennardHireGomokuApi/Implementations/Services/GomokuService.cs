@@ -42,6 +42,9 @@ namespace KennardHireGomokuApi.Implementations.Services
 			if (!_games.TryGetValue(gameId.ToString(), out matchedGame))
 				return EngineResultType.GameNotFound;
 
+			if (matchedGame.IsComplete)
+				return matchedGame.WhoWon;
+
 			newStone.Colour = StoneColourType.Black;
 
 			if (matchedGame.CurrentPlayer == playerId)
@@ -63,6 +66,9 @@ namespace KennardHireGomokuApi.Implementations.Services
 			GameModel matchedGame = null;
 			if (!_games.TryGetValue(gameId.ToString(), out matchedGame))
 				return EngineResultType.GameNotFound;
+
+			if (matchedGame.IsComplete)
+				return matchedGame.WhoWon;
 
 			newStone.Colour = StoneColourType.White;
 

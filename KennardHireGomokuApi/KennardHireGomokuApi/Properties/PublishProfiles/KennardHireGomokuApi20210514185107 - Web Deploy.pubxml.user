@@ -7,6 +7,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4sXGNS7H70GNoFIuT6lDFAAAAAACAAAAAAAQZgAAAAEAACAAAAA3lpHActA7bIlz4gNBYyM/SQCjVMsYInm3sQQBbr2JOwAAAAAOgAAAAAIAACAAAAACnE69RsJHySXWCxfS9RsgXwj5JGsAOhC22QPOP2qUw4AAAABxR/kwJcvfwahglmOrmjWbmEWs1+2wxjBjwAFd0FczXDoVZKyOX2SSW3+x5WiPLvv1SFKFFv7C6BlsE9sKNeOKSD7JsdWtsP1OtEyNYtGB5UIOkNm2kG0aRiPoQuJjIp8coqLmovuDvfy3dFoSsIBmLhRWYixny+I8Caru0tB74UAAAADCPP7XqhqNwOvzzA9aZwxanNtjaJPQp+PMzgox1vgPqrODLMrNzulZ2n2VmVNykJykuqs2ZCREexr7cUEL63YD</EncryptedPassword>
-    <History>True|2021-05-16T15:09:34.7055815Z;True|2021-05-17T00:41:34.5607148+10:00;True|2021-05-14T18:58:02.1983236+10:00;</History>
+    <History>True|2021-05-16T18:14:07.6545570Z;True|2021-05-17T01:09:34.7055815+10:00;True|2021-05-17T00:41:34.5607148+10:00;True|2021-05-14T18:58:02.1983236+10:00;</History>
   </PropertyGroup>
 </Project>
