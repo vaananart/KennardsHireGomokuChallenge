@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "ed8dbb30-13c8-4d6b-87d3-617bb966545f",
+		"name": "KennardHire",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST whiteStone",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"gameId\": \"\",\r\n    \"playerId\": \"\",\r\n    \"column\": 8,\r\n    \"row\": 8\r\n}"
+				},
+				"url": {
+					"raw": "https://kennardhiregomokuapimgt.azure-api.net/GomokuGame/whitestone",
+					"protocol": "https",
+					"host": [
+						"kennardhiregomokuapimgt",
+						"azure-api",
+						"net"
+					],
+					"path": [
+						"GomokuGame",
+						"whitestone"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Game",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"wPlayerName\": \"wPlayer\",\r\n  \"bPlayerName\": \"bPlayer\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://kennardhiregomokuapimgt.azure-api.net/GomokuGame/newgame",
+					"protocol": "https",
+					"host": [
+						"kennardhiregomokuapimgt",
+						"azure-api",
+						"net"
+					],
+					"path": [
+						"GomokuGame",
+						"newgame"
+					]
+				},
+				"description": "This api call is to create a new game. You need the response information to use for posting colored stones and to retrieve all te stones information."
+			},
+			"response": []
+		},
+		{
+			"name": "POST blackstone",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"gameId\": \"326b9a18-1ef8-431c-9df1-df9c29df89c2\",\r\n    \"playerId\": \"a57a91ff-033d-4668-848b-3a03fb1cedb6\",\r\n    \"column\": 8,\r\n    \"row\": 8\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://kennardhiregomokuapimgt.azure-api.net/GomokuGame/blackstone",
+					"protocol": "https",
+					"host": [
+						"kennardhiregomokuapimgt",
+						"azure-api",
+						"net"
+					],
+					"path": [
+						"GomokuGame",
+						"blackstone"
+					]
+				},
+				"description": "Player use this api call to post the black stock location on the board."
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve all Stones",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://kennardhiregomokuapimgt.azure-api.net/GomokuGame/retrievealllstones?gameId=326b9a18-1ef8-431c-9df1-df9c29df89c2",
+					"protocol": "https",
+					"host": [
+						"kennardhiregomokuapimgt",
+						"azure-api",
+						"net"
+					],
+					"path": [
+						"GomokuGame",
+						"retrievealllstones"
+					],
+					"query": [
+						{
+							"key": "gameId",
+							"value": "326b9a18-1ef8-431c-9df1-df9c29df89c2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
