@@ -35,6 +35,7 @@ namespace KennardHireGomokuApi.Controllers
 		[HttpPost("newgame")]
 		public async Task<ActionResult> Post([FromBody] NewGameRequest gameRequest)
 		{
+			_logger.LogInformation($"{typeof(GomokuGameController).Name}:{System.Reflection.MethodBase.GetCurrentMethod().Name}: Received New Game Request => {gameRequest}");
 			var convertedGameModel = _mapper.Map<NewGameRequest, GameModel>(gameRequest);
 			var result = await Task.FromResult(_gomokuService.CreateGame(convertedGameModel));
 
@@ -46,34 +47,34 @@ namespace KennardHireGomokuApi.Controllers
 		[HttpPost("blackstone")]
 		public async Task<ActionResult> RegisterBlackStone([FromBody] NewStoneLocationRequest stoneRequest)
 		{
+			_logger.LogInformation($"{typeof(GomokuGameController).Name}:{System.Reflection.MethodBase.GetCurrentMethod().Name}: Received Black Stone => {stoneRequest}");
 			var newStone = _mapper.Map<NewStoneLocationRequest, StoneModel>(stoneRequest);
 			var result =await Task.FromResult(_gomokuService.PlaceBlackStone(stoneRequest.GameId, stoneRequest.PlayerId, newStone));
 
 			if (result == Enums.EngineResultType.IncorrectPlayer)
-				return BadRequest(new StoneResponseModel { Status = result.ToString() });
-			return Ok(new StoneResponseModel { Status = result.ToString()} );
+				return BadRequest(new StoneAcceptenceResponseModel { Status = result.ToString() });
+			return Ok(new StoneAcceptenceResponseModel { Status = result.ToString()} );
 		}
 
 		[HttpPost("whitestone")]
 		public async Task<ActionResult> RegisterWhiteStone([FromBody] NewStoneLocationRequest stoneRequest)
 		{
+			_logger.LogInformation($"{typeof(GomokuGameController).Name}:{System.Reflection.MethodBase.GetCurrentMethod().Name}: Received White Stone => {stoneRequest}");
 			var newStone = _mapper.Map<NewStoneLocationRequest, StoneModel>(stoneRequest);
 			var result = await Task.FromResult(_gomokuService.PlaceWhiteStone(stoneRequest.GameId, stoneRequest.PlayerId, newStone));
 
 			if (result == Enums.EngineResultType.IncorrectPlayer)
-				return BadRequest(new StoneResponseModel { Status = result.ToString() });
-			return Ok(new StoneResponseModel { Status = result.ToString() });
+				return BadRequest(new StoneAcceptenceResponseModel { Status = result.ToString() });
+			return Ok(new StoneAcceptenceResponseModel { Status = result.ToString() });
 		}
 
 		[HttpGet("retrievealllstones")]
 		public ActionResult GetAllStoneLocations([FromQuery] Guid gameId)
 		{
-			//IEnumerable<StoneModel> stones =_gomokuService.RetrieveAllStonesPlacements(gameId);
+			IEnumerable<StoneModel> stones =_gomokuService.RetrieveAllStonesPlacements(gameId);
+			var convertedStones = _mapper.Map<IEnumerable<StoneModel>, IEnumerable<StoneInfoResponseModel>>(stones);
 
-			//var convertedStones = _mapper.Map<IEnumerable<StoneModel>, IEnumerable<StoneResultModel>>(stones);
-			//return Ok(convertedStones);
-
-			return Ok();
+			return Ok(convertedStones);
 		}
 	}
 }

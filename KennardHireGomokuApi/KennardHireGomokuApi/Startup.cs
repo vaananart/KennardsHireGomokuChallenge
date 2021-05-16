@@ -91,12 +91,16 @@ namespace KennardHireGomokuApi
 										var instance = Activator.CreateInstance(validator) as IGeneralRuleValidator;
 										generalRulesValidatorLookup[instance.Type] = instance;
 									}
-
-							return new GomokuLogicEngine(generalRulesValidatorLookup, validatorLookup, rulesLookup);
+							var logger = x.GetRequiredService<ILogger<GomokuLogicEngine>>();
+							return new GomokuLogicEngine(logger
+															, generalRulesValidatorLookup
+															, validatorLookup
+															, rulesLookup);
 						})
 						.AddSingleton<IGomokuTemporalRepository, GomokuTemporalRepository>()
 						.AddAutoMapper(typeof(Startup));
-						
+			services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_CONNECTIONSTRING"]);
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

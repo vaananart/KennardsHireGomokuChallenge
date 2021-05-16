@@ -10,7 +10,7 @@ namespace KennardHireGomokuApi.DataModels
 		public StoneColourType Colour { get; set; }
 		public int Column { get; set; }
 		public int Row { get; set; }
-		public int index{ get; set; }
+		public int Index{ get; set; }
 
 	}
 

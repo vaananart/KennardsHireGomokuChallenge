@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace KennardHireGomokuApi.Controllers.ReponseModels
 {
-	public class StoneResponseModel
+	public class StoneAcceptenceResponseModel
 	{
 		public string Status { get; set; } 
 	}

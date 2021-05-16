@@ -10,6 +10,10 @@ using KennardHireGomokuApi.Implementations.BusinessLogics;
 using KennardHireGomokuApi.Interfaces;
 using KennardHireGomokuApi.Interfaces.RuleLogic;
 
+using Microsoft.Extensions.Logging;
+
+using Moq;
+
 using NUnit.Framework;
 
 namespace KennardHireGomokuApiTests.BusinessLogic
@@ -65,7 +69,8 @@ namespace KennardHireGomokuApiTests.BusinessLogic
 				var instance = Activator.CreateInstance(ruleChecker, validatorLookup) as IRuleChecker;
 				rulesLookup.Add(instance);
 			}
-			_logicEngine = new GomokuLogicEngine(generalRulesValidatorLookup, validatorLookup, rulesLookup);
+			var mockLogger = new Mock<ILogger<GomokuLogicEngine>>();
+			_logicEngine = new GomokuLogicEngine(mockLogger.Object,generalRulesValidatorLookup, validatorLookup, rulesLookup);
 		}
 
 		[Test]

@@ -4,10 +4,12 @@
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>68e69cd1-b343-440e-bea0-86e1cb7b25ce</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <ApplicationInsightsResourceId>/subscriptions/a4fffcb6-15b0-410d-a315-ac1dc5da54c2/resourcegroups/KennardHire/providers/Microsoft.Insights/components/KennardHireGomokuApi</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />

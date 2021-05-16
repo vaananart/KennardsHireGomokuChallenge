@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "restored": true,
+      "restoreTime": "2021-05-16T13:33:12.2322073Z"
+    },
+    "appInsights1": {
+      "restored": true,
+      "restoreTime": "2021-05-16T13:33:17.4828894Z"
+    }
+  },
+  "parameters": {
+    "appInsights1.subscriptionId": {
+      "Name": "appInsights1.subscriptionId",
+      "Type": "subscription",
+      "Value": "a4fffcb6-15b0-410d-a315-ac1dc5da54c2"
+    },
+    "appInsights1.resourceGroupName": {
+      "Name": "appInsights1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "KennardHire"
+    }
+  }
+}

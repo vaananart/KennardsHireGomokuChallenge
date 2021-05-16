@@ -7,17 +7,22 @@ using KennardHireGomokuApi.DataModels;
 using KennardHireGomokuApi.Enums;
 using KennardHireGomokuApi.Interfaces;
 
+using Microsoft.Extensions.Logging;
+
 namespace KennardHireGomokuApi.Implementations.Services
 {
 	public class GomokuService : IGomokuService
 	{
-		private readonly IList<GameModel> _games;
+		private readonly IDictionary<string, GameModel> _games;
+		private readonly ILogger _logger;
 		private readonly IGomokuLogicEngine _engine;
 
-		public GomokuService(IGomokuLogicEngine engine)
+		public GomokuService(ILogger<GomokuService> logger, IGomokuLogicEngine engine)
 		{
-			_games = new List<GameModel>();
+			_logger = logger;
 			_engine = engine;
+			_games = new Dictionary<string, GameModel>();
+			
 		}
 
 		public GameModel CreateGame(GameModel convertedGameModel)
@@ -27,13 +32,15 @@ namespace KennardHireGomokuApi.Implementations.Services
 			convertedGameModel.BPlayerGuid = Guid.NewGuid();
 			convertedGameModel.CurrentPlayer = convertedGameModel.BPlayerGuid;
 			convertedGameModel.TurnCount = 0;
-			_games.Add(convertedGameModel);
+			_games[convertedGameModel.GameBoardGuid.ToString()] = convertedGameModel;
 			return convertedGameModel;
 		}
 
 		public EngineResultType PlaceBlackStone(Guid gameId, Guid playerId, StoneModel newStone)
 		{
-			var matchedGame = _games.Where(x => x.GameBoardGuid == gameId).FirstOrDefault();
+			GameModel matchedGame = null;
+			if (!_games.TryGetValue(gameId.ToString(), out matchedGame))
+				return EngineResultType.GameNotFound;
 
 			newStone.Colour = StoneColourType.Black;
 
@@ -53,7 +60,9 @@ namespace KennardHireGomokuApi.Implementations.Services
 
 		public EngineResultType PlaceWhiteStone(Guid gameId, Guid playerId, StoneModel newStone)
 		{
-			var matchedGame = _games.Where(x => x.GameBoardGuid == gameId).FirstOrDefault();
+			GameModel matchedGame = null;
+			if (!_games.TryGetValue(gameId.ToString(), out matchedGame))
+				return EngineResultType.GameNotFound;
 
 			newStone.Colour = StoneColourType.White;
 
@@ -69,6 +78,19 @@ namespace KennardHireGomokuApi.Implementations.Services
 			}
 
 			return EngineResultType.IncorrectPlayer;
+		}
+
+		public IEnumerable<StoneModel> RetrieveAllStonesPlacements(Guid gameId)
+		{
+			GameModel matchedGame = null;
+			if (!_games.TryGetValue(gameId.ToString(), out matchedGame))
+				throw new ArgumentException($"{typeof(GomokuService).Name}:{System.Reflection.MethodBase.GetCurrentMethod().Name}:gameId => {gameId} does not exists.");
+
+			var consolidatedStones = matchedGame.BlackStones.ToList();
+
+			consolidatedStones.AddRange(matchedGame.WhiteStones);
+
+			return consolidatedStones.OrderByDescending(x => x.Index);
 		}
 	}
 }

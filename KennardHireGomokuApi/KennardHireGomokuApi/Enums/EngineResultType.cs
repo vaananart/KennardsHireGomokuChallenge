@@ -13,5 +13,6 @@ namespace KennardHireGomokuApi.Enums
 		BlackWon,
 		WhiteWon,
 		IncorrectPlayer,
+		GameNotFound
 	}
 }
