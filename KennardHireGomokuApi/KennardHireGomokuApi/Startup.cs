@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
+using KennardHireGomokuApi.Enums;
 using KennardHireGomokuApi.Implementations.BusinessLogics;
 using KennardHireGomokuApi.Implementations.Repositories;
 using KennardHireGomokuApi.Implementations.Services;
 using KennardHireGomokuApi.Interfaces;
+using KennardHireGomokuApi.Interfaces.RuleLogic;
 
 using KennardHireGomokuApiApi.Middlewares;
 
@@ -41,7 +44,56 @@ namespace KennardHireGomokuApi
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "KennardHireGomokuApi", Version = "v1" });
 			});
 			services.AddSingleton<IGomokuService, GomokuService>()
-						.AddSingleton<IGomokuLogicEngine, GomokuLogicEngine>()
+						.AddSingleton<IGomokuLogicEngine, GomokuLogicEngine>(x=>{
+
+									//Validators
+									var list =	from t in Assembly
+													.GetExecutingAssembly()
+													.GetTypes()
+												where t.GetInterfaces()
+														.Contains(typeof(IDirectionalLogicValidator))
+												select t;
+
+									IDictionary<ValidatorType, IDirectionalLogicValidator> validatorLookup = new Dictionary<ValidatorType, IDirectionalLogicValidator>();
+
+									foreach (Type validator in list)
+									{
+										var instance = Activator.CreateInstance(validator) as IDirectionalLogicValidator;
+										validatorLookup[instance.Type] = instance;
+									}
+
+									// Rule Checks
+									var rules = from t in Assembly
+													.GetExecutingAssembly()
+													.GetTypes()
+												where t.GetInterfaces()
+													.Contains(typeof(IRuleChecker))
+												select t;
+
+									IList<IRuleChecker> rulesLookup = new List<IRuleChecker>();
+
+									foreach (Type ruleChecker in rules)
+									{
+										var instance = Activator.CreateInstance(ruleChecker, validatorLookup) as IRuleChecker;
+										rulesLookup.Add(instance);
+									}
+
+									//General Rule Validators
+									IDictionary<ValidatorType, IGeneralRuleValidator> generalRulesValidatorLookup = new Dictionary<ValidatorType, IGeneralRuleValidator>();
+									var generalRuleList= from t in Assembly
+															.GetExecutingAssembly()
+															.GetTypes()
+															where t.GetInterfaces()
+																	.Contains(typeof(IGeneralRuleValidator))
+															select t;
+									foreach (Type validator in generalRuleList)
+									{
+										var instance = Activator.CreateInstance(validator) as IGeneralRuleValidator;
+										generalRulesValidatorLookup[instance.Type] = instance;
+									}
+
+							return new GomokuLogicEngine(generalRulesValidatorLookup, validatorLookup, rulesLookup);
+						})
 						.AddSingleton<IGomokuTemporalRepository, GomokuTemporalRepository>()
 						.AddAutoMapper(typeof(Startup));
 						

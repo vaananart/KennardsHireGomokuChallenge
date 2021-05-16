@@ -9,7 +9,7 @@ namespace KennardHireGomokuApi.Controllers.RequestModels
 	{
 		public Guid GameId{ get; set; }
 		public Guid PlayerId { get; set; }
-		public char Column{ get; set; }
+		public int Column{ get; set; }
 		public int Row { get; set; }
 	}
 }
