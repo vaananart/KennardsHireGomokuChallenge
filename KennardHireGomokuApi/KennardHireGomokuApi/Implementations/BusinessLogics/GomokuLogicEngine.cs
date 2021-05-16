@@ -62,135 +62,141 @@ namespace KennardHireGomokuApi.Implementations.BusinessLogics
 																	 && x.Column == c.col).Count() > 0
 													 select c;
 
+				foreach (var ruleChecker in _ruleCheckers)
+				{
+					var result = ruleChecker.Check(matchedNeighbourStoneLocations, newStone, matchedList);
+					if (result != null)
+						return result;
+				}
 				//If c have N and S
-				if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.North) && (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.South)))
-				{
+				//if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.North) && (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.South)))
+				//{
 
-					if (_validators[ValidatorType.NorthSouth].Validate(newStone, matchedList))
-					{
-						if (newStone.Colour == StoneColourType.White)
-							return EngineResultType.WhiteWon;
-						else if (newStone.Colour == StoneColourType.Black)
-							return EngineResultType.BlackWon;
-					}
-				}
+				//	if (_validators[ValidatorType.NorthSouth].Validate(newStone, matchedList))
+				//	{
+				//		if (newStone.Colour == StoneColourType.White)
+				//			return EngineResultType.WhiteWon;
+				//		else if (newStone.Colour == StoneColourType.Black)
+				//			return EngineResultType.BlackWon;
+				//	}
+				//}
 				//if c have E and W
-				if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.East) 
-				&& (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.West)))
-				{
-					if (_validators[ValidatorType.EastWest].Validate(newStone, matchedList))
-					{
+				//if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.East) 
+				//&& (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.West)))
+				//{
+				//	if (_validators[ValidatorType.EastWest].Validate(newStone, matchedList))
+				//	{
 
-						if (newStone.Colour == StoneColourType.White)
-							return EngineResultType.WhiteWon;
-						else if (newStone.Colour == StoneColourType.Black)
-							return EngineResultType.BlackWon;
-					}
-				}
+				//		if (newStone.Colour == StoneColourType.White)
+				//			return EngineResultType.WhiteWon;
+				//		else if (newStone.Colour == StoneColourType.Black)
+				//			return EngineResultType.BlackWon;
+				//	}
+				//}
 				//if c have NE and SW
-				if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.NorthEast)
-				&& (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.SouthWest)))
-				{
-					if (_validators[ValidatorType.NorthEastSouthWest].Validate(newStone, matchedList))
-					{
-						if (newStone.Colour == StoneColourType.White)
-							return EngineResultType.WhiteWon;
-						else if (newStone.Colour == StoneColourType.Black)
-							return EngineResultType.BlackWon;
-					}
+				//if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.NorthEast)
+				//&& (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.SouthWest)))
+				//{
+				//	if (_validators[ValidatorType.NorthEastSouthWest].Validate(newStone, matchedList))
+				//	{
+				//		if (newStone.Colour == StoneColourType.White)
+				//			return EngineResultType.WhiteWon;
+				//		else if (newStone.Colour == StoneColourType.Black)
+				//			return EngineResultType.BlackWon;
+				//	}
 
-				}
+				//}
 				//if c have NW and SE
-				if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.NorthWest)
-				&& (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.SouthEast)))
-				{
-					if (_validators[ValidatorType.NorthWestSouthEast].Validate(newStone, matchedList))
-					{
-						if (newStone.Colour == StoneColourType.White)
-							return EngineResultType.WhiteWon;
-						else if (newStone.Colour == StoneColourType.Black)
-							return EngineResultType.BlackWon;
-					}
+				//if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.NorthWest)
+				//&& (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.SouthEast)))
+				//{
+				//	if (_validators[ValidatorType.NorthWestSouthEast].Validate(newStone, matchedList))
+				//	{
+				//		if (newStone.Colour == StoneColourType.White)
+				//			return EngineResultType.WhiteWon;
+				//		else if (newStone.Colour == StoneColourType.Black)
+				//			return EngineResultType.BlackWon;
+				//	}
 
-				}
+				//}
 				//
 				//if c have North
-				if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.North))
-				{
-					if (_validators[ValidatorType.North].Validate(newStone, matchedList))
-					{
-						if (newStone.Colour == StoneColourType.White)
-							return EngineResultType.WhiteWon;
-						else if (newStone.Colour == StoneColourType.Black)
-							return EngineResultType.BlackWon;
-					}
-				}
+				//if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.North))
+				//{
+				//	if (_validators[ValidatorType.North].Validate(newStone, matchedList))
+				//	{
+				//		if (newStone.Colour == StoneColourType.White)
+				//			return EngineResultType.WhiteWon;
+				//		else if (newStone.Colour == StoneColourType.Black)
+				//			return EngineResultType.BlackWon;
+				//	}
+				//}
 				//if c have South
-				if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.South))
-				{
-					if (_validators[ValidatorType.South].Validate(newStone, matchedList))
-					{
-						if (newStone.Colour == StoneColourType.White)
-							return EngineResultType.WhiteWon;
-						else if (newStone.Colour == StoneColourType.Black)
-							return EngineResultType.BlackWon;
-					}
-				}
+				//if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.South))
+				//{
+				//	if (_validators[ValidatorType.South].Validate(newStone, matchedList))
+				//	{
+				//		if (newStone.Colour == StoneColourType.White)
+				//			return EngineResultType.WhiteWon;
+				//		else if (newStone.Colour == StoneColourType.Black)
+				//			return EngineResultType.BlackWon;
+				//	}
+				//}
 				//if c have East
-				if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.East))
-				{
-					if (_validators[ValidatorType.East].Validate(newStone, matchedList))
-					{
-						if (newStone.Colour == StoneColourType.White)
-							return EngineResultType.WhiteWon;
-						else if (newStone.Colour == StoneColourType.Black)
-							return EngineResultType.BlackWon;
-					}
-				}
+				//if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.East))
+				//{
+				//	if (_validators[ValidatorType.East].Validate(newStone, matchedList))
+				//	{
+				//		if (newStone.Colour == StoneColourType.White)
+				//			return EngineResultType.WhiteWon;
+				//		else if (newStone.Colour == StoneColourType.Black)
+				//			return EngineResultType.BlackWon;
+				//	}
+				//}
 				//if c have West
-				if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.West))
-				{
-					if (_validators[ValidatorType.West].Validate(newStone, matchedList))
-					{
-						if (newStone.Colour == StoneColourType.White)
-							return EngineResultType.WhiteWon;
-						else if (newStone.Colour == StoneColourType.Black)
-							return EngineResultType.BlackWon;
-					}
-				}
+				//if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.West))
+				//{
+				//	if (_validators[ValidatorType.West].Validate(newStone, matchedList))
+				//	{
+				//		if (newStone.Colour == StoneColourType.White)
+				//			return EngineResultType.WhiteWon;
+				//		else if (newStone.Colour == StoneColourType.Black)
+				//			return EngineResultType.BlackWon;
+				//	}
+				//}
 				//if c have NE
-				if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.NorthEast))
-				{
-					if (_validators[ValidatorType.NorthEast].Validate(newStone, matchedList))
-					{
-						if (newStone.Colour == StoneColourType.White)
-							return EngineResultType.WhiteWon;
-						else if (newStone.Colour == StoneColourType.Black)
-							return EngineResultType.BlackWon;
-					}
-				}
+				//if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.NorthEast))
+				//{
+				//	if (_validators[ValidatorType.NorthEast].Validate(newStone, matchedList))
+				//	{
+				//		if (newStone.Colour == StoneColourType.White)
+				//			return EngineResultType.WhiteWon;
+				//		else if (newStone.Colour == StoneColourType.Black)
+				//			return EngineResultType.BlackWon;
+				//	}
+				//}
 				//if c have NW
-				if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.NorthWest))
-				{
-					if (_validators[ValidatorType.NorthWest].Validate(newStone, matchedList))
-					{
-						if (newStone.Colour == StoneColourType.White)
-							return EngineResultType.WhiteWon;
-						else if (newStone.Colour == StoneColourType.Black)
-							return EngineResultType.BlackWon;
-					}
-				}
+				//if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.NorthWest))
+				//{
+				//	if (_validators[ValidatorType.NorthWest].Validate(newStone, matchedList))
+				//	{
+				//		if (newStone.Colour == StoneColourType.White)
+				//			return EngineResultType.WhiteWon;
+				//		else if (newStone.Colour == StoneColourType.Black)
+				//			return EngineResultType.BlackWon;
+				//	}
+				//}
 				//if c have SE
-				if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.SouthEast))
-				{
-					if (_validators[ValidatorType.SouthEast].Validate(newStone, matchedList))
-					{
-						if (newStone.Colour == StoneColourType.White)
-							return EngineResultType.WhiteWon;
-						else if (newStone.Colour == StoneColourType.Black)
-							return EngineResultType.BlackWon;
-					}
-				}
+				//if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.SouthEast))
+				//{
+				//	if (_validators[ValidatorType.SouthEast].Validate(newStone, matchedList))
+				//	{
+				//		if (newStone.Colour == StoneColourType.White)
+				//			return EngineResultType.WhiteWon;
+				//		else if (newStone.Colour == StoneColourType.Black)
+				//			return EngineResultType.BlackWon;
+				//	}
+				//}
 				//if c have SW
 				if (matchedNeighbourStoneLocations.Any(x => x.direction == DirectionType.SouthWest)) 
 				{

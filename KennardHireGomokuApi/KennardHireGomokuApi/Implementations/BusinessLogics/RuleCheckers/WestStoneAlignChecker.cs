@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.Linq;
 
 using KennardHireGomokuApi.DataModels;
 using KennardHireGomokuApi.Enums;
@@ -10,14 +11,29 @@ namespace KennardHireGomokuApi.Implementations.BusinessLogics.RuleCheckers
 {
 	public class WestStoneAlignChecker : IRuleChecker
 	{
+		private readonly IDictionary<ValidatorType, IDirectionalLogicValidator> _validators;
+
 		public WestStoneAlignChecker(IDictionary<ValidatorType, IDirectionalLogicValidator> validators)
-		{ }
+		{
+			_validators = validators;
+		}
 
 		public EngineResultType? Check(IEnumerable<(int row, int col, DirectionType direction)> matchingNeighbours
 										, StoneModel newStone
 										, IEnumerable<StoneModel> sameColouredStones)
 		{
-			throw new System.NotImplementedException();
+			if (matchingNeighbours.Any(x => x.direction == DirectionType.West))
+			{
+				if (_validators[ValidatorType.West].Validate(newStone, sameColouredStones))
+				{
+					if (newStone.Colour == StoneColourType.White)
+						return EngineResultType.WhiteWon;
+					else if (newStone.Colour == StoneColourType.Black)
+						return EngineResultType.BlackWon;
+				}
+			}
+
+			return null;
 		}
 	}
 }
